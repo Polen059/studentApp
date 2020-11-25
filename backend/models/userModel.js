@@ -1,52 +1,6 @@
 import mongoose from 'mongoose';
 
-const subjectReportSchema = mongoose.Schema({
-  report: {
-    type: mongoose.Schema.Types.ObjectId,
-    required: true,
-    ref: 'User',
-  },
-  subjectName: {
-    type: String,
-  },
-  subjectGrade: {
-    type: String,
-  },
-  targetGrade: {
-    type: String,
-  },
-  effort: {
-    type: Number,
-  },
-  comment: {
-    type: String,
-  },
-});
-
-const reportSchema = mongoose.Schema(
-  {
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      required: true,
-      ref: 'User',
-    },
-    reportDate: {
-      type: Date,
-    },
-    year: {
-      type: Number,
-    },
-    dataPoint: {
-      type: Number,
-    },
-    data: { subjectReportSchema },
-  },
-  {
-    timestamps: true,
-  }
-);
-
-const UserSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
   googleId: {
     type: String,
   },
@@ -71,6 +25,6 @@ const UserSchema = new mongoose.Schema({
   reportData: { reportSchema },
 });
 
-const User = mongoose.model('user', UserSchema);
+const User = mongoose.model('user', userSchema);
 
 export default User;
