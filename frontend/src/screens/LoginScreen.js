@@ -4,7 +4,7 @@ import { Form, Button, Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 // import Message from '../components/Message'
 // import Loader from '../components/Loader'
-import { login } from '../actions/userActions';
+import { login, checkSession } from '../actions/userActions';
 import FormContainer from '../components/FormContainer';
 
 const LoginScreen = ({ location, history }) => {
@@ -56,6 +56,16 @@ const LoginScreen = ({ location, history }) => {
           Sign In
         </Button>
       </Form>
+      <button
+        className='btn btn-primary'
+        onClick={async () => {
+          console.log('google');
+          await window.open('http://localhost:5000/api/users/google', '_self');
+          // dispatch(checkSession());
+        }}
+      >
+        Google Login
+      </button>
     </FormContainer>
   );
 };

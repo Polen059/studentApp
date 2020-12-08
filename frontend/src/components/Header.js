@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 // useSelector for state, dispatch for actions
 import { useDispatch, useSelector } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Nav, Navbar, Container, NavDropdown } from 'react-bootstrap';
-import { logout } from '../actions/userActions';
+import { logout, checkSession } from '../actions/userActions';
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -14,6 +14,16 @@ const Header = () => {
   const logoutHandler = () => {
     dispatch(logout());
   };
+
+  useEffect(() => {
+    dispatch(checkSession());
+    // if (!userInfo) {
+    //   console.log('no user');
+    //   dispatch(checkSession());
+    // } else {
+    //   console.log('user');
+    // }
+  }, []);
 
   return (
     <header>

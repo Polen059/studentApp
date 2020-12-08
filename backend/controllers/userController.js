@@ -1,6 +1,12 @@
-import asyncHandler from 'express-async-handler';
-import generateToken from '../utils/generateToken.js';
-import User from '../models/userModel.js';
+// import asyncHandler from 'express-async-handler';
+// import generateToken from '../utils/generateToken.js';
+// import User from '../models/userModel.js';
+
+const asyncHandler = require('express-async-handler');
+const generateToken = require('../utils/generateToken');
+const User = require('../models/userModel');
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 
 // Auth User and get token
 // POST /api/users/login
@@ -11,6 +17,25 @@ const authUser = asyncHandler(async (req, res) => {
   const user = await User.findOne({ email });
 
   if (user && (await user.matchPassword(password))) {
+    const { _id, name, email, isAdmin } = user;
+    const token = generateToken(_id);
+
+    const payload = {
+      user: {
+        _id,
+        name,
+        email,
+        isAdmin,
+        token,
+      },
+    };
+
+    const cookieToken = jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: '5m',
+    });
+
+    res.cookie('jwt', cookieToken);
+
     res.json({
       _id: user._id,
       name: user.name,
@@ -20,7 +45,8 @@ const authUser = asyncHandler(async (req, res) => {
     });
   } else {
     res.status(401);
-    throw new Error('Invalid email or password');
+    res.send('error');
+    // throw new Error('Invalid email or password');
   }
 });
 
@@ -40,8 +66,10 @@ const getUserProfile = asyncHandler(async (req, res) => {
     });
   } else {
     res.status(404);
-    throw new Error('User not found');
+    res.send('error');
+    // throw new Error('User not found');
   }
 });
 
-export { authUser, getUserProfile };
+module.exports = { authUser, getUserProfile };
+// export { authUser, getUserProfile };

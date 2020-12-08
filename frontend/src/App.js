@@ -11,6 +11,7 @@ function App() {
       <Header />
       <main className='py-3'>
         {/* <h1>School Data</h1> */}
+
         <Container>
           <Route path='/login' component={LoginScreen} />
           <Route path='/dashboard' component={DataDashboard} />
