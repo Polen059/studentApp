@@ -23,9 +23,19 @@ const JwtStrategy = require('passport-jwt').Strategy;
 // import generateToken from '../utils/generateToken.js';
 // dotenv.config();
 
+// @Route POST api/users/login
+// @Desc User sends username and password
+// @Access public
 router.post('/login', authUser);
+
+// @Route GET api/users/profile
+// @Desc Return users profile
+// @Access private
 router.route('/profile').get(protect, getUserProfile);
-// Experimental Google Routes
+
+// @Route GET api/users/google
+// @Desc Initial route for Google OAuth
+// @Access public
 router.get(
   '/google',
   passport.authenticate('google', {
@@ -33,6 +43,9 @@ router.get(
   })
 );
 
+// @Route GET api/users/google/callback
+// @Desc Callback route for an authenticated Google user
+// @Access public
 router.get(
   '/google/callback',
   passport.authenticate('google', { failureRedirect: '/' }),
@@ -46,14 +59,16 @@ router.get(
       user: {
         email: req.user.email,
         id: req.user._id,
+        name: req.user.name,
       },
     };
 
+    // Create a token with user details
     const token = jwt.sign(
       payload,
       process.env.JWT_SECRET,
       {
-        expiresIn: '5m',
+        expiresIn: '10m',
       }
       // (err, token) => {
       //   console.log('signed token', token);
@@ -62,7 +77,7 @@ router.get(
       //   });
       // }
     );
-
+    // Set the cookie containing the jwt token
     res.cookie('jwt', token);
 
     // console.log('/google/redirect', req.user);
@@ -71,28 +86,41 @@ router.get(
   })
 );
 
+// @Route GET api/users/logout
+// @Desc User logout
+// @Access public
 router.get('/logout', (req, res) => {
-  console.log(req);
-  console.log(req.session);
-
   req.session = null;
   req.logout();
-  const homeURL = encodeURIComponent('http://localhost:3000/');
+  res.redirect('http://localhost:3000');
+  // const homeURL = encodeURIComponent('http://localhost:3000/');
   // res.redirect(
   //   `https://${process.env.AUTH0_DOMAIN}/v2/logout?returnTo=${homeURL}&client_id=${process.env.AUTH0_CLIENT_ID}`
   // );
 });
 
+// @Route GET api/users/current-session
+// @Desc Called on page update, check user and return user details
+// @Access public
 router.get(
   '/current-session',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    console.log(req.cookies.jwt);
+    console.log('Current session jwt', req.cookies.jwt);
+    console.log('User', req.user);
+    const dec = jwt.verify(
+      req.cookies.jwt,
+      process.env.JWT_SECRET,
+      function (err, decoded) {
+        if (err) {
+          console.log('error', err);
+        }
+        console.log('decoded', decoded);
+      }
+    );
     if (req.user) {
       console.log('found');
-      res.json({
-        user: req.user,
-      });
+      res.json(req.user);
     }
     // jwt.verify(req.token, process.env.JWT_SECRET, (err, data) => {
     //   if (err) {

@@ -27,14 +27,16 @@ passport.deserializeUser((id, done) => {
   });
 });
 
+// Middleware -
 var opts = {};
 opts.jwtFromRequest = function (req) {
-  console.log('jwt thing');
+  console.log('opts.jwtFromRequest');
   // tell passport to read JWT from cookies
   var token = null;
   if (req && req.cookies) {
     token = req.cookies['jwt'];
   }
+  console.log('token', token);
   return token;
 };
 opts.secretOrKey = process.env.JWT_SECRET;
@@ -42,9 +44,8 @@ opts.secretOrKey = process.env.JWT_SECRET;
 // main authentication, our app will rely on it
 passport.use(
   new JwtStrategy(opts, function (jwt_payload, done) {
-    console.log('JWT BASED AUTH GETTING CALLED'); // called everytime a protected URL is being served
-    // console.log('jwt1', jwt_payload);
-    // console.log(jwt_payload.user);
+    console.log('JwtStrategy'); // called everytime a protected URL is being served
+    console.log('jwt_payload', jwt_payload);
 
     // TODO ensure check is completed
     // if (CheckUser(jwt_payload.data)) {
@@ -56,6 +57,7 @@ passport.use(
   })
 );
 
+// Google OAuth Strategy
 passport.use(
   new GoogleStrategy(
     {
@@ -69,9 +71,11 @@ passport.use(
 
       User.findOne({ email: profile.emails[0].value }).then(
         async (currentUser) => {
+          // check if user already exists in our own db
           if (currentUser) {
             done(null, currentUser);
           } else {
+            // Create a new user (TODO only for staff)
             new User({
               name: profile.displayName,
               email: profile.emails[0].value,
@@ -84,9 +88,6 @@ passport.use(
           }
         }
       );
-
-      // check if user already exists in our own db
-      // TODO Check admin and students seperately
     }
   )
 );

@@ -45,8 +45,10 @@ export const login = (email, password) => async (dispatch) => {
   }
 };
 
-export const logout = () => (dispatch) => {
-  localStorage.removeItem('userInfo');
+export const logout = () => async (dispatch) => {
+  const { data } = await axios.get('/api/users/logout', {
+    crossdomain: true,
+  });
   dispatch({ type: USER_LOGOUT });
 };
 

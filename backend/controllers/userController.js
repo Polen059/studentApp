@@ -31,7 +31,7 @@ const authUser = asyncHandler(async (req, res) => {
     };
 
     const cookieToken = jwt.sign(payload, process.env.JWT_SECRET, {
-      expiresIn: '5m',
+      expiresIn: '10m',
     });
 
     res.cookie('jwt', cookieToken);

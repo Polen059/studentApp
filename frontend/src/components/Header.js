@@ -16,13 +16,8 @@ const Header = () => {
   };
 
   useEffect(() => {
+    // Check user has token
     dispatch(checkSession());
-    // if (!userInfo) {
-    //   console.log('no user');
-    //   dispatch(checkSession());
-    // } else {
-    //   console.log('user');
-    // }
   }, []);
 
   return (
@@ -35,13 +30,6 @@ const Header = () => {
           <Navbar.Toggle aria-controls='basic-navbar-nav' />
           <Navbar.Collapse id='basic-navbar-nav'>
             <Nav className='ml-auto'>
-              {/* <LinkContainer to='/api/users/google'> */}
-              <a href='/api/users/google'>
-                <Nav.Link>
-                  <i class='fas fa-user'></i> Staff/Students
-                </Nav.Link>
-              </a>
-              {/* </LinkContainer> */}
               {userInfo ? (
                 <NavDropdown title={userInfo.name} id='username'>
                   <LinkContainer to='/dashboard'>

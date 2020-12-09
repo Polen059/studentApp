@@ -41,7 +41,7 @@ app.use(
   })
 );
 
-// Passport middleware - May not need
+// Passport middleware
 app.use(passport.initialize());
 // app.use(passport.session());
 app.use(bodyParser.urlencoded({ extended: false }));

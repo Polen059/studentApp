@@ -1,22 +1,5 @@
-import mongoose from 'mongoose';
-
-const subjectReportSchema = mongoose.Schema({
-  subjectName: {
-    type: String,
-  },
-  subjectGrade: {
-    type: String,
-  },
-  targetGrade: {
-    type: String,
-  },
-  effort: {
-    type: Number,
-  },
-  comment: {
-    type: String,
-  },
-});
+const mongoose = require('mongoose');
+const Subject = require('./subjectModel');
 
 const reportSchema = mongoose.Schema(
   {
@@ -34,7 +17,7 @@ const reportSchema = mongoose.Schema(
     dataPoint: {
       type: Number,
     },
-    data: [subjectReportSchema],
+    // data: [Subject],
   },
   {
     timestamps: true,
@@ -43,4 +26,5 @@ const reportSchema = mongoose.Schema(
 
 const Report = mongoose.model('report', reportSchema);
 
-export default Report;
+module.exports = Report;
+// export default Report;
