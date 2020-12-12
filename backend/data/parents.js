@@ -1,13 +1,18 @@
 const bcrypt = require('bcryptjs');
 
-const users = [
+const parents = [
   {
-    forename: 'Mrs',
-    surname: 'User',
     email: 'mrsUser@example.com',
+    name: 'Mrs User',
     password: bcrypt.hashSync('123456', 10),
-    role: parent,
+    children: [],
+  },
+  {
+    name: 'Mr Student',
+    email: 'mrstudent@example.com',
+    password: bcrypt.hashSync('123456', 10),
+    children: [],
   },
 ];
 
-module.exports = users;
+module.exports = parents;

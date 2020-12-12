@@ -6,6 +6,7 @@ import {
   USER_LOGOUT,
 } from '../constants/userConstants';
 
+// Parent login using email/password
 export const login = (email, password) => async (dispatch) => {
   console.log('login action attempt', email, password);
   try {
@@ -45,13 +46,14 @@ export const login = (email, password) => async (dispatch) => {
   }
 };
 
+// Clear redux and remove cookie with token in
 export const logout = () => async (dispatch) => {
-  const { data } = await axios.get('/api/users/logout', {
-    crossdomain: true,
-  });
+  console.log('logout');
+  const { data } = await axios.get('/api/users/logout');
   dispatch({ type: USER_LOGOUT });
 };
 
+// Called on page load, check if token exists and return the user if token is valid
 export const checkSession = () => async (dispatch) => {
   console.log('check session');
   try {

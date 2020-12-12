@@ -1,14 +1,14 @@
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
-import colors from 'colors';
-import users from './data/users.js';
-// import products from './data/products.js';
-import User from './models/userModel.js';
-// import Product from './models/productModel.js'
-// import Order from './models/orderModel.js'
-import connectDB from './config/db.js';
-
-dotenv.config();
+const mongoose = require('mongoose');
+require('dotenv').config();
+const colors = require('colors');
+const users = require('./data/users.js');
+const parents = require('./data/parents');
+// const products = require( './data/products.js';
+const User = require('./models/user.js');
+const Parent = require('./models/parent.js');
+// const Product = require( './models/productModel.js')
+// const Order = require( './models/orderModel.js')
+const connectDB = require('./config/db.js');
 
 connectDB();
 
@@ -17,10 +17,12 @@ const importData = async () => {
     // await Order.deleteMany()
     // await Product.deleteMany()
     await User.deleteMany();
+    await Parent.deleteMany();
 
     const createdUsers = await User.insertMany(users);
+    const createdParents = await Parent.insertMany(parents);
 
-    const adminUser = createdUsers[0]._id;
+    // const adminUser = createdUsers[0]._id;
 
     // const sampleProducts = products.map((product) => {
     //   return { ...product, user: adminUser }
@@ -40,8 +42,9 @@ const destroyData = async () => {
   try {
     // await Order.deleteMany()
     // await Product.deleteMany()
-    await User.deleteMany();
 
+    await User.deleteMany();
+    await Parent.deleteMany();
     console.log('Data Destroyed!'.red.inverse);
     process.exit();
   } catch (error) {

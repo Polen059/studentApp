@@ -31,7 +31,7 @@ const Header = () => {
           <Navbar.Collapse id='basic-navbar-nav'>
             <Nav className='ml-auto'>
               {userInfo ? (
-                <NavDropdown title={userInfo.name} id='username'>
+                <NavDropdown title={userInfo.email} id='username'>
                   <LinkContainer to='/dashboard'>
                     <NavDropdown.Item>Dashboard</NavDropdown.Item>
                   </LinkContainer>

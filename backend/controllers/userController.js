@@ -4,7 +4,8 @@
 
 const asyncHandler = require('express-async-handler');
 const generateToken = require('../utils/generateToken');
-const User = require('../models/userModel');
+const User = require('../models/user');
+const Parent = require('../models/parent');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
@@ -14,19 +15,18 @@ require('dotenv').config();
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 
-  const user = await User.findOne({ email });
+  const user = await Parent.findOne({ email });
 
   if (user && (await user.matchPassword(password))) {
-    const { _id, name, email, isAdmin } = user;
+    const { _id, email, name } = user;
     const token = generateToken(_id);
+    console.log('user', user);
 
     const payload = {
       user: {
-        _id,
-        name,
         email,
-        isAdmin,
         token,
+        name,
       },
     };
 
@@ -40,7 +40,6 @@ const authUser = asyncHandler(async (req, res) => {
       _id: user._id,
       name: user.name,
       email: user.email,
-      isAdmin: user.isAdmin,
       token: generateToken(user._id),
     });
   } else {
@@ -55,14 +54,12 @@ const authUser = asyncHandler(async (req, res) => {
 // Private
 const getUserProfile = asyncHandler(async (req, res) => {
   console.log('/api/users/profile');
-  const user = await User.findById(req.user._id);
+  const user = await Parent.findById(req.user._id);
 
   if (user) {
     res.json({
-      _id: user.id,
-      name: user.name,
       email: user.email,
-      isAdmin: user.isAdmin,
+      name: user.name,
     });
   } else {
     res.status(404);

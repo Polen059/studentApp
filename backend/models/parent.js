@@ -1,15 +1,8 @@
-// import mongoose from 'mongoose';
-// import bcrypt from 'bcryptjs';
-
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
-const userSchema = mongoose.Schema(
+const ParentSchema = new mongoose.Schema(
   {
-    name: {
-      type: String,
-      required: true,
-    },
     email: {
       type: String,
       required: true,
@@ -17,12 +10,18 @@ const userSchema = mongoose.Schema(
     },
     password: {
       type: String,
-      // required: true,
-    },
-    isAdmin: {
-      type: Boolean,
       required: true,
-      default: false,
+    },
+    children: [
+      {
+        email: {
+          type: String,
+        },
+      },
+    ],
+    lastLoggedin: {
+      type: Date,
+      default: Date.now,
     },
   },
   {
@@ -30,11 +29,11 @@ const userSchema = mongoose.Schema(
   }
 );
 
-userSchema.methods.matchPassword = async function (enteredPassword) {
+ParentSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
 
-userSchema.pre('save', async function (next) {
+ParentSchema.pre('save', async function (next) {
   if (!this.isModified('password')) {
     next();
   }
@@ -43,7 +42,4 @@ userSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, salt);
 });
 
-const User = mongoose.model('User', userSchema);
-
-module.exports = User;
-// export default User;
+module.exports = Parent = mongoose.model('parent', ParentSchema);

@@ -9,7 +9,7 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const JwtStrategy = require('passport-jwt').Strategy;
 const dotenv = require('dotenv');
-const User = require('../models/userModel');
+const User = require('../models/user');
 const mongoose = require('mongoose');
 
 dotenv.config();
@@ -57,7 +57,7 @@ passport.use(
   })
 );
 
-// Google OAuth Strategy
+// Google OAuth Strategy callback
 passport.use(
   new GoogleStrategy(
     {
@@ -68,18 +68,20 @@ passport.use(
     },
     (accessToken, refreshToken, profile, done) => {
       console.log(profile.emails[0].value);
+      console.log('profile', profile);
 
       User.findOne({ email: profile.emails[0].value }).then(
         async (currentUser) => {
           // check if user already exists in our own db
           if (currentUser) {
+            console.log('Current User', currentUser);
             done(null, currentUser);
           } else {
             // Create a new user (TODO only for staff)
             new User({
               name: profile.displayName,
               email: profile.emails[0].value,
-              isAdmin: false,
+              // isAdmin: false,
             })
               .save()
               .then((newUser) => {

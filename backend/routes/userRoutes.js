@@ -1,4 +1,5 @@
 const express = require('express');
+// const session = require('express-session');
 require('dotenv').config();
 const passport = require('passport');
 const router = express.Router();
@@ -6,7 +7,7 @@ const authUser = require('../controllers/userController').authUser;
 const getUserProfile = require('../controllers/userController').getUserProfile;
 const protect = require('../middleware/authMiddleware');
 const asyncHandler = require('express-async-handler');
-const User = require('../models/userModel');
+// const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 const generateToken = require('../utils/generateToken');
 const JwtStrategy = require('passport-jwt').Strategy;
@@ -90,8 +91,14 @@ router.get(
 // @Desc User logout
 // @Access public
 router.get('/logout', (req, res) => {
-  req.session = null;
+  console.log('logout');
+  // req.session = null;
+  res.session = null;
+  // req.session.destroy();
+  // res.cookies = null;
   req.logout();
+  // res.end();
+  res.clearCookie('jwt');
   res.redirect('http://localhost:3000');
   // const homeURL = encodeURIComponent('http://localhost:3000/');
   // res.redirect(
@@ -108,20 +115,50 @@ router.get(
   (req, res) => {
     console.log('Current session jwt', req.cookies.jwt);
     console.log('User', req.user);
+
+    // Verify users jwt token
     const dec = jwt.verify(
       req.cookies.jwt,
       process.env.JWT_SECRET,
-      function (err, decoded) {
+      async function (err, decoded) {
+        // If token is not valid
+        // TODO ENSURE ONLY VALID VERIFY SENDS BACK
         if (err) {
           console.log('error', err);
         }
-        console.log('decoded', decoded);
+        let user;
+
+        // decoded is user object
+        const [username, domain] = decoded.user.email.split('@');
+
+        // Domain check for parents or teacher/student
+        if (domain === 'frieslandschool.com') {
+          user = await User.findOne({ email: decoded.user.email });
+        } else {
+          user = await Parent.findOne({ email: decoded.user.email });
+        }
+
+        const { email, role, name, reportData } = user;
+
+        // Send back to frontend and redux
+        res.json({
+          email,
+          name,
+          role,
+          reportData,
+        });
       }
     );
-    if (req.user) {
-      console.log('found');
-      res.json(req.user);
-    }
+    // if (req.user) {
+    //   console.log('found');
+    //   res.json({
+    //     email,
+    //     name,
+    //     role,
+    //     reportData,
+    //   });
+    // }
+
     // jwt.verify(req.token, process.env.JWT_SECRET, (err, data) => {
     //   if (err) {
     //     res.sendStatus(403);

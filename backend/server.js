@@ -1,6 +1,4 @@
 const express = require('express');
-const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser');
 require('dotenv').config();
 const connectDB = require('./config/db');
 var cors = require('cors');
@@ -9,6 +7,9 @@ const userRoutes = require('./routes/userRoutes');
 const mongoose = require('mongoose');
 const passportSetup = require('./config/passport-setup');
 const colors = require('colors');
+
+const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 
 // import express from 'express';
 // import bodyParser from 'body-parser';
@@ -30,9 +31,6 @@ connectDB();
 
 const app = express();
 
-// Middleware
-app.use(express.json());
-
 app.use(
   cors({
     origin: 'http://localhost:3000', // allow to server to accept request from different origin
@@ -43,7 +41,11 @@ app.use(
 
 // Passport middleware
 app.use(passport.initialize());
-// app.use(passport.session());
+app.use(passport.session());
+
+// Middleware
+app.use(express.json({ extended: false }));
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
