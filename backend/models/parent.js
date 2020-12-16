@@ -13,12 +13,16 @@ const ParentSchema = new mongoose.Schema(
       required: true,
     },
     children: [
-      {
-        email: {
-          type: String,
-        },
-      },
+      // {
+      //   email: {
+      //     type: String,
+      //   },
+      // },
     ],
+    role: {
+      type: String,
+      default: 'parent',
+    },
     lastLoggedin: {
       type: Date,
       default: Date.now,

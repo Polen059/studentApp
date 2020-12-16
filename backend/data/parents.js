@@ -2,10 +2,10 @@ const bcrypt = require('bcryptjs');
 
 const parents = [
   {
-    email: 'mrsUser@example.com',
+    email: 'mrsuser@example.com',
     name: 'Mrs User',
     password: bcrypt.hashSync('123456', 10),
-    children: [],
+    children: ['19tuser@frieslandschool.com'],
   },
   {
     name: 'Mr Student',

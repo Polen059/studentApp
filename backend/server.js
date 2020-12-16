@@ -4,6 +4,7 @@ const connectDB = require('./config/db');
 var cors = require('cors');
 const passport = require('passport');
 const userRoutes = require('./routes/userRoutes');
+const parentRoutes = require('./routes/parentRoutes');
 const mongoose = require('mongoose');
 const passportSetup = require('./config/passport-setup');
 const colors = require('colors');
@@ -55,6 +56,7 @@ app.get('/', (req, res) => {
 
 // Routes
 app.use('/api/users', userRoutes);
+app.use('/api/parents', parentRoutes);
 
 const PORT = process.env.PORT || 5000;
 

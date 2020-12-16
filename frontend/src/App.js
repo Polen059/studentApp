@@ -4,6 +4,7 @@ import Footer from './components/Footer';
 import { Container } from 'react-bootstrap';
 import LoginScreen from './screens/LoginScreen';
 import DataDashboard from './screens/DataDashboard';
+import ParentDashboard from './screens/ParentDashboard';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Container>
           <Route path='/login' component={LoginScreen} />
           <Route path='/dashboard' component={DataDashboard} />
+          <Route path='/parent' component={ParentDashboard} />
         </Container>
       </main>
       <Footer />

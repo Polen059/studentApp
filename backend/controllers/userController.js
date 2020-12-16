@@ -18,7 +18,7 @@ const authUser = asyncHandler(async (req, res) => {
   const user = await Parent.findOne({ email });
 
   if (user && (await user.matchPassword(password))) {
-    const { _id, email, name } = user;
+    const { _id, email, name, role, children } = user;
     const token = generateToken(_id);
     console.log('user', user);
 
@@ -27,6 +27,8 @@ const authUser = asyncHandler(async (req, res) => {
         email,
         token,
         name,
+        role,
+        children,
       },
     };
 
@@ -60,6 +62,8 @@ const getUserProfile = asyncHandler(async (req, res) => {
     res.json({
       email: user.email,
       name: user.name,
+      role: user.role,
+      students: user.students,
     });
   } else {
     res.status(404);

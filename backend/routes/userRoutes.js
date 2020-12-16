@@ -5,7 +5,7 @@ const passport = require('passport');
 const router = express.Router();
 const authUser = require('../controllers/userController').authUser;
 const getUserProfile = require('../controllers/userController').getUserProfile;
-const protect = require('../middleware/authMiddleware');
+const { protect } = require('../middleware/authMiddleware');
 const asyncHandler = require('express-async-handler');
 // const User = require('../models/user');
 const jwt = require('jsonwebtoken');
@@ -138,7 +138,7 @@ router.get(
           user = await Parent.findOne({ email: decoded.user.email });
         }
 
-        const { email, role, name, reportData } = user;
+        const { email, role, name, reportData, children } = user;
 
         // Send back to frontend and redux
         res.json({
@@ -146,6 +146,7 @@ router.get(
           name,
           role,
           reportData,
+          children,
         });
       }
     );
