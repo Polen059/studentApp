@@ -31,6 +31,7 @@ router.get(
     studentData = await User.find({ email: children });
 
     // Return data response to redux
+
     res.json(studentData);
   })
 );

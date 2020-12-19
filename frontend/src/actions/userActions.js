@@ -51,6 +51,7 @@ export const logout = () => async (dispatch) => {
   console.log('logout');
   const { data } = await axios.get('/api/users/logout');
   dispatch({ type: USER_LOGOUT });
+  // history.push('/');
 };
 
 // Called on page load, check if token exists and return the user if token is valid

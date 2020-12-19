@@ -8,20 +8,28 @@ import { login, checkSession } from '../actions/userActions';
 import FormContainer from '../components/FormContainer';
 
 const LoginScreen = ({ location, history }) => {
+  // Fields for the form
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const dispatch = useDispatch();
 
+  // Redux user data
   const userLogin = useSelector((state) => state.userLogin);
   const { loading, error, userInfo } = userLogin;
 
   useEffect(() => {
+    // When logged in send to the right page... TODO
     if (userInfo) {
-      history.push('/dashboard');
+      if (userInfo.role === 'parent') {
+        history.push('/parent');
+      } else {
+        history.push('/dashboard');
+      }
     }
   }, [history, userInfo]);
 
+  // Send username and password to the login action (parents)
   const submitHandler = (e) => {
     e.preventDefault();
     dispatch(login(email, password));

@@ -5,6 +5,7 @@ import { Container } from 'react-bootstrap';
 import LoginScreen from './screens/LoginScreen';
 import DataDashboard from './screens/DataDashboard';
 import ParentDashboard from './screens/ParentDashboard';
+import ReportScreen from './screens/ReportScreen';
 
 function App() {
   return (
@@ -14,9 +15,21 @@ function App() {
         {/* <h1>School Data</h1> */}
 
         <Container>
-          <Route path='/login' component={LoginScreen} />
-          <Route path='/dashboard' component={DataDashboard} />
+          <Route path='/login' component={LoginScreen} /> {/*   */}
+          <Route path='/dashboard' component={DataDashboard} />{' '}
+          {/* Currently nothing */}
           <Route path='/parent' component={ParentDashboard} />
+          {/* Currently only works for parents. Add student  */}
+          <Route path='/report/:id' component={ReportScreen} />
+          {/* Contains single student report  */}
+          {/* Single subject */}
+          {/* Single report */}
+          {/* Add parent */}
+          {/* Edit parent */}
+          {/* Delete Parent */}
+          {/* Add student */}
+          {/* Delete Student */}
+          {/* Edit Student */}
         </Container>
       </main>
       <Footer />

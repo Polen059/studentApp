@@ -9,9 +9,9 @@ export const getStudentData = () => async (dispatch) => {
   console.log('getStudentData for Parents');
   try {
     // Needed???????????????? Seems to work without
-    // dispatch({
-    //   type: PARENT_REQUEST,
-    // });
+    dispatch({
+      type: PARENT_REQUEST,
+    });
     // const config = {
     //   headers: {
     //     'Content-Type': 'application/json',
