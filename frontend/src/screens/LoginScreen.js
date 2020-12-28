@@ -23,8 +23,16 @@ const LoginScreen = ({ location, history }) => {
     if (userInfo) {
       if (userInfo.role === 'parent') {
         history.push('/parent');
-      } else {
+      } else if (userInfo.role === 'student') {
+        history.push(`/report/${userInfo._id}`);
+      } else if (userInfo.role === 'admin') {
+        // Add Admin user route on frontend
         history.push('/dashboard');
+      } else if (userInfo.role === 'teacher') {
+        // Add Teacher user route on frontend
+        history.push('/dashboard');
+      } else {
+        history.push('/login');
       }
     }
   }, [history, userInfo]);

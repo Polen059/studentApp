@@ -28,8 +28,8 @@ router.post(
     // Find all children users in the array
     studentData = await User.findById(_id);
     console.log('data', studentData);
-    // Return data response to redux
 
+    // Return data response to redux
     res.json(studentData);
   })
 );

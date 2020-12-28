@@ -61,6 +61,7 @@ router.get(
         email: req.user.email,
         id: req.user._id,
         name: req.user.name,
+        role: req.user.role,
       },
     };
 
@@ -81,9 +82,16 @@ router.get(
     // Set the cookie containing the jwt token
     res.cookie('jwt', token);
 
-    // console.log('/google/redirect', req.user);
-
-    res.redirect('http://localhost:3000/');
+    // If user is student send to their report
+    if (req.user.role === 'student') {
+      res.redirect(`http://localhost:3000/report/${req.user._id}`);
+    } else {
+      // Otherwise send to root
+      // Todo
+      // Teacher to student selector
+      // Admin to admin panel
+      res.redirect('http://localhost:3000/');
+    }
   })
 );
 
@@ -138,10 +146,11 @@ router.get(
           user = await Parent.findOne({ email: decoded.user.email });
         }
 
-        const { email, role, name, reportData, children } = user;
+        const { _id, email, role, name, reportData, children } = user;
 
         // Send back to frontend and redux
         res.json({
+          _id,
           email,
           name,
           role,

@@ -11,15 +11,16 @@ const ReportScreen = ({ history, match }) => {
   const reportData = useSelector((state) => state.reportData);
   const { loading, student } = reportData;
 
-  console.log(match.params.id);
-  console.log(history);
-  console.log('student', student);
+  // console.log(match.params.id);
+  // console.log(history);
+  // console.log('student', student);
 
   // Params passed by the URL
   const userId = match.params.id;
 
   const dispatch = useDispatch();
 
+  // If user is logged in get report data, else send to login page
   useEffect(() => {
     if (userId) {
       dispatch(getReportData(userId));

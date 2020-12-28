@@ -6,6 +6,7 @@ const passport = require('passport');
 const userRoutes = require('./routes/userRoutes');
 const parentRoutes = require('./routes/parentRoutes');
 const studentRoutes = require('./routes/studentRoutes');
+const teacherRoutes = require('./routes/teacherRoutes');
 const mongoose = require('mongoose');
 const passportSetup = require('./config/passport-setup');
 const colors = require('colors');
@@ -59,6 +60,7 @@ app.get('/', (req, res) => {
 app.use('/api/users', userRoutes);
 app.use('/api/parents', parentRoutes);
 app.use('/api/students', studentRoutes);
+app.use('/api/teachers', teacherRoutes);
 
 const PORT = process.env.PORT || 5000;
 

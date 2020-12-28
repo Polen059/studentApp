@@ -6,6 +6,7 @@ import LoginScreen from './screens/LoginScreen';
 import DataDashboard from './screens/DataDashboard';
 import ParentDashboard from './screens/ParentDashboard';
 import ReportScreen from './screens/ReportScreen';
+import SearchScreen from './screens/SearchScreen';
 
 function App() {
   return (
@@ -21,7 +22,9 @@ function App() {
           <Route path='/parent' component={ParentDashboard} />
           {/* Currently only works for parents. Add student  */}
           <Route path='/report/:id' component={ReportScreen} />
-          {/* Contains single student report  */}
+          {/* Contains single student report should be available to all but protected  */}
+          {/* Teacher screen for finding student reports */}
+          <Route path='/findstudent' component={SearchScreen} />
           {/* Single subject */}
           {/* Single report */}
           {/* Add parent */}
