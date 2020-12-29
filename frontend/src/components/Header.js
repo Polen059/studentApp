@@ -36,9 +36,10 @@ const Header = () => {
               {/* Show email address and links if user logged in */}
               {userInfo ? (
                 <NavDropdown title={userInfo.email} id='username'>
-                  <LinkContainer to='/dashboard'>
+                  {/* What wil the dashboard even do???? */}
+                  {/* <LinkContainer to='/dashboard'>
                     <NavDropdown.Item>Dashboard</NavDropdown.Item>
-                  </LinkContainer>
+                  </LinkContainer> */}
 
                   {/* Parent only links */}
                   {userInfo.role === 'parent' && (

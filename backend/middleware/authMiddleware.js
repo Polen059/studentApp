@@ -7,18 +7,40 @@ const asyncHandler = require('express-async-handler');
 const Parent = require('../models/parent');
 require('dotenv').config();
 
+// Checks cookie for role being member of staff (teacher or admin)
 const protect = asyncHandler(async (req, res, next) => {
   let token;
+
+  // Tests for the cookie
+  // console.log('header', req.headers);
+  // console.log('header cookie header', req.headers.cookie);
+  // console.log('header cookie', req.cookies.jwt);
+  // console.log('header auth', req.headers.authorization);
+
   if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith('Bearer')
+    //  -- Original Bearer Token authentication --
+    // req.headers.authorization &&
+    // req.headers.authorization.startsWith('Bearer')
+    req.headers.cookie
   ) {
     try {
-      token = req.headers.authorization.split(' ')[1];
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      console.log('decoded', decoded);
+      // token = req.headers.authorization.split(' ')[1];
+      token = req.headers.cookie.split('=')[1];
 
-      req.user = await Parent.findById(decoded.id);
+      // Get decoded user from the verified token
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+
+      // Destructure the user from the decoded object
+      const { user } = decoded;
+
+      // Check if user is teacher or admin
+      if (user.role !== 'teacher' && user.role !== 'admin') {
+        console.log('not staff');
+        throw new Error('Student...');
+      }
+
+      // Not sure why I put this here...
+      // req.user = await Parent.findById(decoded.id);
       // .select('-password');
       next();
     } catch (error) {
@@ -33,7 +55,7 @@ const protect = asyncHandler(async (req, res, next) => {
   }
 });
 
-// Check for admin user routes
+// Check for admin user routes --> TODO
 const admin = (req, res, next) => {
   if (req.user && req.user.role === 'admin') {
     next();
@@ -59,11 +81,12 @@ const parent = (req, res, next) => {
   }
 };
 
-// Check if a user is a member of staff
+// Check if a user is a member of staff TODO
 const teacher = (req, res, next) => {
   if (req.user && (req.user.role === 'parent' || req.user.role === 'admin')) {
     next();
   } else {
+    console.log('user is staff');
     res.status(401);
     throw new Error('Not authorised as a teacher user');
   }

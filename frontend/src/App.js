@@ -17,7 +17,7 @@ function App() {
 
         <Container>
           <Route path='/login' component={LoginScreen} /> {/*   */}
-          <Route path='/dashboard' component={DataDashboard} />{' '}
+          {/* <Route path='/dashboard' component={DataDashboard} />{' '} */}
           {/* Currently nothing */}
           <Route path='/parent' component={ParentDashboard} />
           {/* Currently only works for parents. Add student  */}

@@ -5,7 +5,7 @@ const passport = require('passport');
 const router = express.Router();
 const authUser = require('../controllers/userController').authUser;
 const getUserProfile = require('../controllers/userController').getUserProfile;
-const { protect } = require('../middleware/authMiddleware');
+const { protect, teacher } = require('../middleware/authMiddleware');
 const asyncHandler = require('express-async-handler');
 const User = require('../models/user');
 const jwt = require('jsonwebtoken');
@@ -17,6 +17,7 @@ const JwtStrategy = require('passport-jwt').Strategy;
 // @Access Private/teachers & admin
 router.get(
   '/searchStudents',
+  protect,
   asyncHandler(async (req, res) => {
     // Get data from the header for use in query
     // Note uses Query instead of body for the params
@@ -25,21 +26,39 @@ router.get(
 
     // Use intake to filter staff
     // Regex name for ease of use
-    const students = await User.find({
-      intake,
-      name: { $regex: name, $options: 'i' },
-    });
+    let students;
+
+    // Check users input.  If no year is chosen ensure only students are returned
+    if (intake && name) {
+      students = await User.find({
+        intake,
+        name: { $regex: name, $options: 'i' },
+      });
+    } else if (intake) {
+      students = await User.find({
+        intake,
+      });
+    } else if (name) {
+      students = await User.find({
+        role: 'student',
+        name: { $regex: name, $options: 'i' },
+      });
+    } else {
+      res.status(400);
+      res.send('No search string');
+    }
 
     console.log('found students', students);
 
     // Return array of students
+    // TODO sort issue of no students being returned
     if (students) {
       // Array with at least one student???
       res.json(students);
     } else {
       // Empty array
       res.status(404);
-      res.send('error');
+      res.send('errorrr');
     }
   })
 );

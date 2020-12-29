@@ -31,7 +31,6 @@ const UserSchema = new mongoose.Schema(
     },
     reportData: [
       {
-        _id: false,
         reportDate: {
           type: Date,
         },
@@ -41,6 +40,7 @@ const UserSchema = new mongoose.Schema(
         dataPoint: {
           type: Number,
         },
+
         data: [
           {
             subjectName: {

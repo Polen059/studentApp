@@ -32,8 +32,9 @@ const authUser = asyncHandler(async (req, res) => {
       },
     };
 
+    // Create cookie and set expiration other one (for Google users) is in userRoutes google/callback
     const cookieToken = jwt.sign(payload, process.env.JWT_SECRET, {
-      expiresIn: '10m',
+      expiresIn: '1w',
     });
 
     res.cookie('jwt', cookieToken);

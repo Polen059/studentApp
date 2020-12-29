@@ -66,11 +66,12 @@ router.get(
     };
 
     // Create a token with user details
+    // Create cookie and set expiration other one (for parent users) is in userControllers authUser
     const token = jwt.sign(
       payload,
       process.env.JWT_SECRET,
       {
-        expiresIn: '10m',
+        expiresIn: '1w',
       }
       // (err, token) => {
       //   console.log('signed token', token);
@@ -85,6 +86,10 @@ router.get(
     // If user is student send to their report
     if (req.user.role === 'student') {
       res.redirect(`http://localhost:3000/report/${req.user._id}`);
+    } else if (req.user.role === 'admin') {
+      res.redirect(`http://localhost:3000/findstudent`);
+    } else if (req.user.role === 'teacher') {
+      res.redirect(`http://localhost:3000/findstudent`);
     } else {
       // Otherwise send to root
       // Todo

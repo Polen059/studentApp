@@ -27,10 +27,9 @@ const LoginScreen = ({ location, history }) => {
         history.push(`/report/${userInfo._id}`);
       } else if (userInfo.role === 'admin') {
         // Add Admin user route on frontend
-        history.push('/dashboard');
+        history.push('/findstudent');
       } else if (userInfo.role === 'teacher') {
-        // Add Teacher user route on frontend
-        history.push('/dashboard');
+        history.push('/findstudent');
       } else {
         history.push('/login');
       }
@@ -72,6 +71,8 @@ const LoginScreen = ({ location, history }) => {
           Sign In
         </Button>
       </Form>
+
+      {/* Button for Google users to use */}
       <button
         className='btn btn-primary'
         onClick={async () => {
