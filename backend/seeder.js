@@ -11,6 +11,7 @@ const Parent = require('./models/parent.js');
 const connectDB = require('./config/db.js');
 
 connectDB();
+mongoose.set('useFindAndModify', false);
 
 const importData = async () => {
   try {

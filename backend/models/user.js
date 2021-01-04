@@ -30,37 +30,42 @@ const UserSchema = new mongoose.Schema(
       type: String,
     },
     reportData: [
-      {
-        reportDate: {
-          type: Date,
-        },
-        year: {
-          type: Number,
-        },
-        dataPoint: {
-          type: Number,
-        },
-
-        data: [
-          {
-            subjectName: {
-              type: String,
-            },
-            subjectGrade: {
-              type: String,
-            },
-            targetGrade: {
-              type: String,
-            },
-            effort: {
-              type: Number,
-            },
-            comment: {
-              type: String,
-            },
+      new mongoose.Schema(
+        {
+          reportDate: {
+            type: Date,
           },
-        ],
-      },
+          year: {
+            type: Number,
+          },
+          dataPoint: {
+            type: Number,
+          },
+
+          data: [
+            {
+              subjectName: {
+                type: String,
+              },
+              subjectGrade: {
+                type: String,
+              },
+              targetGrade: {
+                type: String,
+              },
+              effort: {
+                type: Number,
+              },
+              comment: {
+                type: String,
+              },
+            },
+          ],
+        },
+        {
+          timestamps: true,
+        }
+      ),
     ],
   },
   {

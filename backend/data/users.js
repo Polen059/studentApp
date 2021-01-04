@@ -43,40 +43,7 @@ const users = [
     name: 'Test User',
     intake: 19,
     role: 'student',
-    reportData: [
-      {
-        year: 2020,
-        datapoint: 1,
-        data: [
-          {
-            subjectName: 'Maths',
-            effort: 5,
-            subjectGrade: 6,
-          },
-          {
-            subjectName: 'English',
-            effort: 4,
-            subjectGrade: 6,
-          },
-        ],
-      },
-      {
-        year: 2020,
-        datapoint: 2,
-        data: [
-          {
-            subjectName: 'Maths',
-            effort: 5,
-            subjectGrade: 7,
-          },
-          {
-            subjectName: 'English',
-            effort: 3,
-            subjectGrade: 5,
-          },
-        ],
-      },
-    ],
+    reportData: [],
   },
 
   // {

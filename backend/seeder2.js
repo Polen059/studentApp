@@ -12,8 +12,50 @@ const importData = async () => {
     await User.deleteMany();
 
     const createdUsers = await User.insertMany(users);
+    console.log('created users');
+    console.log(createdUsers);
 
     const adminUser = createdUsers[0]._id;
+
+    const studentUser = await User.findOne({
+      email: '19tuser@frieslandschool.com',
+    });
+
+    console.log(studentUser);
+
+    await studentUser.reportData.addToSet({
+      year: 2020,
+      datapoint: 1,
+      data: [
+        {
+          subjectName: 'Maths',
+          effort: 5,
+          subjectGrade: 6,
+        },
+        {
+          subjectName: 'English',
+          effort: 4,
+          subjectGrade: 6,
+        },
+      ],
+    });
+
+    await studentUser.reportData.addToSet({
+      year: 2020,
+      datapoint: 2,
+      data: [
+        {
+          subjectName: 'Maths',
+          effort: 5,
+          subjectGrade: 7,
+        },
+        {
+          subjectName: 'English',
+          effort: 3,
+          subjectGrade: 5,
+        },
+      ],
+    });
 
     console.log('Data Imported!'.green.inverse);
     process.exit();
