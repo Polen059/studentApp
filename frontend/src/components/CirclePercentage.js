@@ -50,9 +50,10 @@ const CirclePercentage = ({
   const circumference = 2 * Math.PI * radius;
 
   useEffect(() => {
-    const progressOffset = ((100 - progress) / 100) * circumference;
+    const progressOffset = (progress / 100) * circumference;
+    console.log(progressOffset);
     setOffset(progressOffset);
-    circleRef.current.style = 'transition: stroke-dashoffset 2s ease-in-out;';
+    circleRef.current.style = 'transition: stroke-dashoffset 0.5s ease-in-out;';
   }, [setOffset, circumference, progress, offset]);
   return (
     <>
@@ -75,7 +76,7 @@ const CirclePercentage = ({
           strokeDasharray={circumference}
           strokeDashoffset={offset}
         />
-        <StyledText x={center} y={center}>
+        <StyledText x={`${center}`} y={`${center}`}>
           {effort}
         </StyledText>
         <StyledSubText x={center} y={center + 30}>

@@ -69,6 +69,35 @@ const importReport = async () => {
       }
     );
 
+    await User.findOneAndUpdate(
+      {
+        email: '19tuser@frieslandschool.com',
+      },
+      {
+        $push: {
+          reportData: {
+            year: 2020,
+            datapoint: 3,
+            data: [
+              {
+                subjectName: 'Maths',
+                effort: 5,
+                subjectGrade: 7,
+              },
+              {
+                subjectName: 'English',
+                effort: 5,
+                subjectGrade: 6,
+              },
+            ],
+          },
+        },
+      },
+      {
+        timestamps: true,
+      }
+    );
+
     console.log('Data Imported!'.green.inverse);
     process.exit();
   } catch (error) {

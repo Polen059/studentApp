@@ -26,7 +26,10 @@ router.post(
     // const { _id } = decoded.user;
 
     // Find all children users in the array
-    studentData = await User.findById(_id);
+    let studentData = await User.findById(_id);
+    // console.log('e', studentData.email);
+    // studentData['yep'] = 'yep';
+    // console.log(studentData.yep);
     console.log('data', studentData);
 
     // Return data response to redux

@@ -77,21 +77,27 @@ const SearchScreen = () => {
           {loading ? (
             <div>loading</div>
           ) : teacherStudentData ? (
-            teacherStudentData.map((student) => (
-              <tr key={student._id}>
-                <td>{student.name}</td>
-                <td>{student.email}</td>
-                <td>{student.updatedAt}</td>
-                {console.log(student)}
-                <td>
-                  <LinkContainer to={`/report/${student._id}`}>
-                    <Button variant='light' className='btn-sm'>
-                      Read Report
-                    </Button>
-                  </LinkContainer>
-                </td>
-              </tr>
-            ))
+            teacherStudentData.map((student) => {
+              const reportDate = new Date(student.updatedAt);
+              return (
+                <tr key={student._id}>
+                  <td>{student.name}</td>
+                  <td>{student.email}</td>
+                  <td>
+                    {reportDate.getDate()}/{reportDate.getMonth() + 1}/
+                    {reportDate.getFullYear()}
+                  </td>
+                  {console.log(student)}
+                  <td>
+                    <LinkContainer to={`/student/${student._id}`}>
+                      <Button variant='light' className='btn-sm'>
+                        Read Report
+                      </Button>
+                    </LinkContainer>
+                  </td>
+                </tr>
+              );
+            })
           ) : error ? (
             <div>{error}</div>
           ) : teacherStudentData && teacherStudentData.length === 0 ? (

@@ -38,8 +38,8 @@ const AverageEffort = ({ averageEffortArray }) => {
         previousEffort={previousEffort}
         size={250}
         strokeWidth={30}
-        circleOneStroke='#ddd'
-        circleTwoStroke={effortColor()}
+        circleOneStroke={effortColor()}
+        circleTwoStroke='#ddd'
       />
     </div>
   );
