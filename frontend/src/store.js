@@ -13,10 +13,12 @@ const reducer = combineReducers({
   teacherData: teacherReducer,
 });
 
+// Checklocal storage, could cookie be checked here?
 const userInfoFromStorage = localStorage.getItem('userInfo')
   ? JSON.parse(localStorage.getItem('userInfo'))
   : null;
 
+// Set redux initial state to userinfo from local storage if it exists
 const initialState = { userLogin: { userInfo: userInfoFromStorage } };
 
 const middleware = [thunk];

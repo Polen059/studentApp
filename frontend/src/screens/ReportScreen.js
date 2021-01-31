@@ -6,6 +6,7 @@ import ReportsList from '../components/studentData/ReportsList';
 import styled from 'styled-components';
 import SubjectList from '../components/studentData/SubjectList';
 import { Container, Col, Row } from 'react-bootstrap';
+import axios from 'axios';
 
 const ReportsSection = styled.div`
   display: flex;
