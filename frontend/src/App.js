@@ -9,6 +9,7 @@ import ReportScreen from './screens/ReportScreen';
 import SearchScreen from './screens/SearchScreen';
 import SubjectReportScreen from './screens/SubjectReportScreen';
 import SingleReportScreen from './screens/SingleReportScreen';
+import HomeScreen from './screens/HomeScreen';
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
             path='/student/:id/report/:reportId'
             component={SingleReportScreen}
           />
+          <Route exact path='/' component={HomeScreen} />
           {/* Add parent */}
           {/* Edit parent */}
           {/* Delete Parent */}
