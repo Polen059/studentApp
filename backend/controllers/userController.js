@@ -37,7 +37,10 @@ const authUser = asyncHandler(async (req, res) => {
       expiresIn: '1w',
     });
 
-    res.cookie('jwt', cookieToken);
+    res.cookie('jwt', cookieToken, {
+      secure: true,
+      httpOnly: true,
+    });
     // res.redirect('/parent');
     res.json({
       _id: user._id,
