@@ -83,19 +83,30 @@ router.get(
     // Set the cookie containing the jwt token
     res.cookie('jwt', token);
 
-    // If user is student send to their report
-    if (req.user.role === 'student') {
-      res.redirect(`http://localhost:3000/report/${req.user._id}`);
-    } else if (req.user.role === 'admin') {
-      res.redirect(`http://localhost:3000/findstudent`);
-    } else if (req.user.role === 'teacher') {
-      res.redirect(`http://localhost:3000/findstudent`);
+    if (process.env.NODE_ENV === 'production') {
+      // Production routes
+      if (req.user.role === 'student') {
+        res.redirect(`/report/${req.user._id}`);
+      } else if (req.user.role === 'admin') {
+        res.redirect(`/findstudent`);
+      } else if (req.user.role === 'teacher') {
+        res.redirect(`/findstudent`);
+      } else {
+        // Otherwise send to root
+        res.redirect('/');
+      }
     } else {
-      // Otherwise send to root
-      // Todo
-      // Teacher to student selector
-      // Admin to admin panel
-      res.redirect('http://localhost:3000/');
+      // Development routes
+      if (req.user.role === 'student') {
+        res.redirect(`http://localhost:3000/report/${req.user._id}`);
+      } else if (req.user.role === 'admin') {
+        res.redirect(`http://localhost:3000/findstudent`);
+      } else if (req.user.role === 'teacher') {
+        res.redirect(`http://localhost:3000/findstudent`);
+      } else {
+        // Otherwise send to root
+        res.redirect('http://localhost:3000/');
+      }
     }
   })
 );

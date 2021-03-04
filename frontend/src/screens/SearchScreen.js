@@ -99,7 +99,7 @@ const SearchScreen = ({ history }) => {
           <thead>
             <tr>
               <th>NAME</th>
-              <th>EMAIL</th>
+              <th>INTAKE</th>
               <th>LATEST REPORT</th>
               <th></th>
             </tr>
@@ -113,7 +113,7 @@ const SearchScreen = ({ history }) => {
                 return (
                   <tr key={student._id}>
                     <td>{student.name}</td>
-                    <td>{student.email}</td>
+                    <td>{student.email.substring(0, 2)}</td>
                     <td>
                       {reportDate.getDate()}/{reportDate.getMonth() + 1}/
                       {reportDate.getFullYear()}
