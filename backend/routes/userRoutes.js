@@ -81,7 +81,10 @@ router.get(
       // }
     );
     // Set the cookie containing the jwt token
-    res.cookie('jwt', token);
+    res.cookie('jwt', token, {
+      secure: true,
+      httpOnly: true,
+    });
 
     if (process.env.NODE_ENV === 'production') {
       // Production routes
