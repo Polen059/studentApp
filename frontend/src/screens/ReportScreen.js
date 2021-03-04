@@ -5,7 +5,7 @@ import AverageEffort from '../components/studentData/AverageEffort';
 import ReportsList from '../components/studentData/ReportsList';
 import styled from 'styled-components';
 import SubjectList from '../components/studentData/SubjectList';
-import { Container, Col, Row } from 'react-bootstrap';
+import { Container, Col, Row, Button } from 'react-bootstrap';
 import axios from 'axios';
 
 const ReportsSection = styled.div`
@@ -41,58 +41,6 @@ const ReportScreen = ({ history, match }) => {
 
   const dispatch = useDispatch();
 
-  // initialise ordered reports
-  // let reportsOrderedByDate;
-  // let avgEffort;
-  // let subjectReports = [];
-
-  // // Student exists and has loaded
-  // if (student) {
-  //   // Sort the array of reports, newest first
-  //   reportsOrderedByDate = reportData.sort((a, b) => {
-  //     return new Date(b.createdAt) - new Date(a.createdAt);
-  //   });
-
-  //   // Find average effort of the reports
-  //   // Returns an array of numbers representing a reports average effort
-  //   avgEffort = reportsOrderedByDate
-  //     .map((report) =>
-  //       report.data.map((subject) => {
-  //         return subject.effort;
-  //       })
-  //     )
-  //     .map(
-  //       (report) =>
-  //         report.reduce((total, effort) => total + effort) / report.length
-  //     );
-
-  //   //   Sort the sorted data by subject rather than by report date
-  //   reportsOrderedByDate.forEach((report) => {
-  //     console.log(report);
-  //     report.data.forEach((subject) => {
-  //       console.log(subject);
-  //       // If the subject name appears in the subjectreports array
-  //       if (
-  //         !subjectReports.some((o) => o.subjectName === subject.subjectName)
-  //       ) {
-  //         // Add a new object
-  //         let obj = { subjectName: subject.subjectName, data: [] };
-  //         subjectReports.push(obj);
-  //         subject.date = report.createdAt;
-  //         obj.data.push(subject);
-  //       } else {
-  //         subjectReports.forEach((subjectArr) => {
-  //           if (subjectArr.subjectName === subject.subjectName) {
-  //             subject.date = report.createdAt;
-  //             subjectArr.data.push(subject);
-  //           }
-  //         });
-  //       }
-  //     });
-  //   });
-  //   console.log(subjectReports);
-  // }
-
   // If user is logged in get report data, else send to login page
   useEffect(() => {
     if (!student) {
@@ -110,9 +58,35 @@ const ReportScreen = ({ history, match }) => {
         <div>loading</div>
       ) : student ? (
         <>
-          <h1 style={{ marginBottom: '30px' }}>
-            {student.name}'s Latest Report
-          </h1>
+          <Row>
+            <h1 style={{ marginBottom: '30px' }}>
+              {student.name}'s Latest Report
+            </h1>
+          </Row>
+          {userInfo && userInfo.role === 'admin' && (
+            <Row className='mb-3'>
+              <Button
+                size='sm'
+                onClick={() => {
+                  history.go(-1);
+                }}
+              >
+                Find new student
+              </Button>
+            </Row>
+          )}
+          {userInfo && userInfo.role === 'parent' && (
+            <Row className='mb-3'>
+              <Button
+                size='sm'
+                onClick={() => {
+                  history.go(-1);
+                }}
+              >
+                Back to dashboard
+              </Button>
+            </Row>
+          )}
           <Row>
             {/* The effort Circle - Props are an array of effort scores */}
             {student && (

@@ -34,6 +34,36 @@ const importReport = async () => {
                 effort: 4,
                 subjectGrade: 6,
               },
+              {
+                subjectName: 'Science',
+                effort: 5,
+                subjectGrade: 4,
+              },
+              {
+                subjectName: 'History',
+                effort: 3,
+                subjectGrade: 4,
+              },
+              {
+                subjectName: 'Geography',
+                effort: 4,
+                subjectGrade: 6,
+              },
+              {
+                subjectName: 'French',
+                effort: 2,
+                subjectGrade: 5,
+              },
+              {
+                subjectName: 'Computer Science',
+                effort: 5,
+                subjectGrade: 8,
+              },
+              {
+                subjectName: 'Physical Education',
+                effort: 3,
+                subjectGrade: 4,
+              },
             ],
           },
         },
@@ -52,13 +82,43 @@ const importReport = async () => {
             data: [
               {
                 subjectName: 'Maths',
-                effort: 5,
-                subjectGrade: 7,
+                effort: 4,
+                subjectGrade: 5,
               },
               {
                 subjectName: 'English',
+                effort: 4,
+                subjectGrade: 6,
+              },
+              {
+                subjectName: 'Science',
+                effort: 4,
+                subjectGrade: 6,
+              },
+              {
+                subjectName: 'History',
                 effort: 3,
+                subjectGrade: 4,
+              },
+              {
+                subjectName: 'Geography',
+                effort: 4,
                 subjectGrade: 5,
+              },
+              {
+                subjectName: 'French',
+                effort: 2,
+                subjectGrade: 3,
+              },
+              {
+                subjectName: 'Computer Science',
+                effort: 5,
+                subjectGrade: 6,
+              },
+              {
+                subjectName: 'Physical Education',
+                effort: 4,
+                subjectGrade: 6,
               },
             ],
           },
@@ -81,13 +141,43 @@ const importReport = async () => {
             data: [
               {
                 subjectName: 'Maths',
+                effort: 3,
+                subjectGrade: 3,
+              },
+              {
+                subjectName: 'English',
+                effort: 4,
+                subjectGrade: 5,
+              },
+              {
+                subjectName: 'Science',
                 effort: 5,
                 subjectGrade: 7,
               },
               {
-                subjectName: 'English',
-                effort: 5,
+                subjectName: 'History',
+                effort: 3,
+                subjectGrade: 5,
+              },
+              {
+                subjectName: 'Geography',
+                effort: 4,
                 subjectGrade: 6,
+              },
+              {
+                subjectName: 'French',
+                effort: 3,
+                subjectGrade: 4,
+              },
+              {
+                subjectName: 'Computer Science',
+                effort: 5,
+                subjectGrade: 8,
+              },
+              {
+                subjectName: 'Physical Education',
+                effort: 2,
+                subjectGrade: 4,
               },
             ],
           },

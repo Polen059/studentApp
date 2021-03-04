@@ -4,9 +4,13 @@ import { Form, Button, Row, Col, Tabs, Tab } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 // import Message from '../components/Message'
 // import Loader from '../components/Loader'
-import { login, checkSession } from '../actions/userActions';
+import { login } from '../actions/userActions';
 import FormContainer from '../components/FormContainer';
 
+// This is the login screen for all users split into two halves staff & students / parents
+// Staff/Students use Google Oauth
+//  Parents use username password
+// Logged in users details are stored in a cookie on the backend
 const LoginScreen = ({ location, history }) => {
   // Fields for the form
   const [email, setEmail] = useState('');
@@ -43,10 +47,19 @@ const LoginScreen = ({ location, history }) => {
   };
 
   return (
-    <Tabs defaultActiveKey='students/staff' id='login'>
+    <Tabs defaultActiveKey='students/staff' id='login' className='mb-3'>
       <Tab eventKey='students/staff' title='students/staff'>
-        <FormContainer>
-          {/* Button for Google users to use */}
+        {/* Button for Google users to use */}
+        <div>
+          <p>
+            Friesand staff and students should click on this button to log in
+            with their frieslandschool.com accounts.
+          </p>
+          <p>
+            Once you click the button you will be taken to a screen to log in
+            with this account. If you are logged in with any other Google
+            account, then the login will fail.
+          </p>
           <button
             className='btn btn-primary'
             onClick={async () => {
@@ -55,12 +68,11 @@ const LoginScreen = ({ location, history }) => {
                 'http://localhost:5000/api/users/google',
                 '_self'
               );
-              // dispatch(checkSession());
             }}
           >
             Google Login
           </button>
-        </FormContainer>
+        </div>
       </Tab>
       <Tab eventKey='parents/guardians' title='parents/guardians'>
         <FormContainer>

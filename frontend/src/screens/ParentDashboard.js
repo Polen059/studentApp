@@ -3,11 +3,9 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getStudentData } from '../actions/parentActions';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Table, Button } from 'react-bootstrap';
+import { Table, Button, Row } from 'react-bootstrap';
 
 const ParentDashboard = ({ match, history }) => {
-  // const history = useHistory();
-
   // Redux user data
   const userLogin = useSelector((state) => state.userLogin);
   const { userInfo } = userLogin;
@@ -19,18 +17,18 @@ const ParentDashboard = ({ match, history }) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (userInfo && userInfo.role === 'parent') {
+    if (userInfo && userInfo.role === 'parent' && !studentData) {
       dispatch(getStudentData());
-      console.log(studentData);
-    } else {
-      console.log('no user info');
+    } else if (!userInfo || userInfo.role !== 'parent') {
       history.push('/login');
     }
-  }, [dispatch]);
+  }, [dispatch, userInfo]);
 
   return (
     <>
-      <h1>Parent Dashboard</h1>
+      <Row className='mb-3'>
+        <h1>Parent Dashboard</h1>
+      </Row>
       {loading ? (
         <div>Loading</div>
       ) : studentData ? (
@@ -38,9 +36,9 @@ const ParentDashboard = ({ match, history }) => {
           <thead>
             <tr>
               <th>NAME</th>
-              <th>EMAIL</th>
+              {/* <th>EMAIL</th> */}
               <th>LATEST REPORT</th>
-              <th></th>
+              <th>READ</th>
             </tr>
           </thead>
           <tbody>
@@ -49,7 +47,7 @@ const ParentDashboard = ({ match, history }) => {
               return (
                 <tr key={student._id}>
                   <td>{student.name}</td>
-                  <td>{student.email}</td>
+                  {/* <td>{student.email}</td> */}
                   <td>
                     {reportDate.getDate()}/{reportDate.getMonth() + 1}/
                     {reportDate.getFullYear()}
@@ -57,9 +55,7 @@ const ParentDashboard = ({ match, history }) => {
                   {console.log(student)}
                   <td>
                     <LinkContainer to={`/student/${student._id}`}>
-                      <Button variant='light' className='btn-sm'>
-                        Read Report
-                      </Button>
+                      <Button className='btn-sm'>Read Report</Button>
                     </LinkContainer>
                   </td>
                 </tr>

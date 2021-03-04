@@ -5,7 +5,7 @@ import { LinkContainer } from 'react-router-bootstrap';
 import { Nav, Navbar, Container, NavDropdown } from 'react-bootstrap';
 import { logout, checkSession } from '../actions/userActions';
 
-const Header = () => {
+const Header = ({ history }) => {
   // Access Redux actions
   const dispatch = useDispatch();
 
@@ -19,13 +19,18 @@ const Header = () => {
   };
 
   useEffect(() => {
-    // Check user has token
-    dispatch(checkSession());
+    // Check user has token in header to check for all pages
+    if (!userInfo) {
+      dispatch(checkSession());
+    }
+    if (userInfo && userInfo.role === 'admin') {
+      history.push('/findstudent');
+    }
   }, []);
 
   return (
     <header>
-      <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
+      <Navbar bg='primary' variant='dark' expand='lg' collapseOnSelect>
         <Container>
           <LinkContainer to='/'>
             <Navbar.Brand>Friesland Progress Reports</Navbar.Brand>

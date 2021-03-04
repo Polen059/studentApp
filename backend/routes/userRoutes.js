@@ -112,7 +112,7 @@ router.get('/logout', (req, res) => {
   req.logout();
   // res.end();
   res.clearCookie('jwt');
-  res.redirect('/');
+  res.redirect('http://localhost:3000/');
   // const homeURL = encodeURIComponent('http://localhost:3000/');
   // res.redirect(
   //   `https://${process.env.AUTH0_DOMAIN}/v2/logout?returnTo=${homeURL}&client_id=${process.env.AUTH0_CLIENT_ID}`

@@ -46,12 +46,13 @@ export const login = (email, password) => async (dispatch) => {
   }
 };
 
-// Clear redux and remove cookie with token in
+// Clear redux state and redirect to login page
 export const logout = () => async (dispatch) => {
   console.log('logout');
   const { data } = await axios.get('/api/users/logout');
+  console.log(data);
   dispatch({ type: USER_LOGOUT });
-  // history.push('/');
+  document.location.href = '/login';
 };
 
 // Called on page load, check if token exists and return the user if token is valid

@@ -29,6 +29,9 @@ const StyledSubText = styled.text`
   font-weight: bold;
 `;
 
+// This component is the student effort indicator displayed in an svg circle
+// The circle shows the effort out of 5 as a %
+// The color changes depending on if the effort has improved or got worse
 const CirclePercentage = ({
   size,
   progress,
@@ -51,7 +54,6 @@ const CirclePercentage = ({
 
   useEffect(() => {
     const progressOffset = (progress / 100) * circumference;
-    console.log(progressOffset);
     setOffset(progressOffset);
     circleRef.current.style = 'transition: stroke-dashoffset 0.5s ease-in-out;';
   }, [setOffset, circumference, progress, offset]);

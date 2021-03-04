@@ -1,4 +1,5 @@
 const express = require('express');
+const path = require('path');
 require('dotenv').config();
 const connectDB = require('./config/db');
 var cors = require('cors');
@@ -34,13 +35,13 @@ connectDB();
 
 const app = express();
 
-app.use(
-  cors({
-    origin: 'http://localhost:3000', // allow to server to accept request from different origin
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true, // allow session cookie from browser to pass through
-  })
-);
+// app.use(
+//   cors({
+//     origin: 'http://localhost:3000', // allow to server to accept request from different origin
+//     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+//     credentials: true, // allow session cookie from browser to pass through
+//   })
+// );
 
 // Passport middleware
 app.use(passport.initialize());
@@ -52,15 +53,27 @@ app.use(express.json({ extended: false }));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.get('/', (req, res) => {
-  res.send('Api is running');
-});
-
 // Routes
 app.use('/api/users', userRoutes);
 app.use('/api/parents', parentRoutes);
 app.use('/api/students', studentRoutes);
 app.use('/api/teachers', teacherRoutes);
+
+__dirname = path.resolve();
+
+console.log('dir', __dirname);
+
+// When ready for production
+if (process.env.NODE_ENV === 'production') {
+  app.use(express.static(path.join(__dirname, '/frontend/build')));
+  app.get('*', (req, res) =>
+    res.sendFile(path.resolve(__dirname, 'frontend', 'build', 'index.html'))
+  );
+} else {
+  app.get('/', (req, res) => {
+    res.send('Api is running');
+  });
+}
 
 const PORT = process.env.PORT || 5000;
 
