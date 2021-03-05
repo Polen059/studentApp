@@ -64,8 +64,7 @@ passport.use(
       // options for google strategy
       clientID: process.env.CLIENT_ID,
       clientSecret: process.env.CLIENT_SECRET,
-      callbackURL:
-        'https://blooming-everglades-00258.herokuapp.com/api/users/google/callback',
+      callbackURL: '/api/users/google/callback',
     },
     (accessToken, refreshToken, profile, done) => {
       console.log(profile.emails[0].value);

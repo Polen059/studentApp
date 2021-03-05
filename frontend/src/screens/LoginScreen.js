@@ -64,10 +64,7 @@ const LoginScreen = ({ location, history }) => {
             className='btn btn-primary'
             onClick={async () => {
               console.log('google');
-              await window.open(
-                'http://localhost:5000/api/users/google',
-                '_self'
-              );
+              await window.open('/api/users/google', '_self');
             }}
           >
             Google Login
