@@ -1,16 +1,9 @@
-// import passport from 'passport';
-// import GoogleStrategy from 'passport-google-oauth20';
-// import * as JwtStrategy from 'passport-jwt';
-// // import { ExtractJwt, JwtStrategy } from 'passport-jwt';
-// import dotenv from 'dotenv';
-// import User from '../models/userModel.js';
-
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const JwtStrategy = require('passport-jwt').Strategy;
+// const ExtractJwt = require('passport-jwt').ExtractJwt;
 const dotenv = require('dotenv');
 const User = require('../models/user');
-const mongoose = require('mongoose');
 
 dotenv.config();
 
@@ -36,7 +29,7 @@ opts.jwtFromRequest = function (req) {
   if (req && req.cookies) {
     token = req.cookies['jwt'];
   }
-  console.log('token', token);
+
   return token;
 };
 opts.secretOrKey = process.env.JWT_SECRET;
@@ -45,7 +38,6 @@ opts.secretOrKey = process.env.JWT_SECRET;
 passport.use(
   new JwtStrategy(opts, function (jwt_payload, done) {
     console.log('JwtStrategy'); // called everytime a protected URL is being served
-    console.log('jwt_payload', jwt_payload);
 
     // TODO ensure check is completed
     // if (CheckUser(jwt_payload.data)) {
@@ -71,13 +63,13 @@ passport.use(
     },
     (accessToken, refreshToken, profile, done) => {
       console.log(profile.emails[0].value);
-      console.log('profile', profile);
+      // console.log('profile', profile);
 
       User.findOne({ email: profile.emails[0].value }).then(
         async (currentUser) => {
           // check if user already exists in our own db
           if (currentUser) {
-            console.log('Current User', currentUser);
+            // console.log('Current User', currentUser);
             done(null, currentUser);
           } else {
             // Create a new user (TODO only for staff)

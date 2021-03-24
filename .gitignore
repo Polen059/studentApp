@@ -13,6 +13,12 @@ node_modules/
 # production
 /frontend/build
 
+# Data uploaded to Mongo
+/backend/data/
+backend/data
+/backend/data
+
+
 # misc
 .DS_Store
 .env

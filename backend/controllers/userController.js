@@ -1,7 +1,3 @@
-// import asyncHandler from 'express-async-handler';
-// import generateToken from '../utils/generateToken.js';
-// import User from '../models/userModel.js';
-
 const asyncHandler = require('express-async-handler');
 const generateToken = require('../utils/generateToken');
 const User = require('../models/user');
@@ -20,7 +16,7 @@ const authUser = asyncHandler(async (req, res) => {
   if (user && (await user.matchPassword(password))) {
     const { _id, email, name, role, children } = user;
     const token = generateToken(_id);
-    console.log('user', user);
+    // console.log('user', user);
 
     const payload = {
       user: {

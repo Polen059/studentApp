@@ -87,6 +87,7 @@ const ReportScreen = ({ history, match }) => {
               </Button>
             </Row>
           )}
+
           <Row>
             {/* The effort Circle - Props are an array of effort scores */}
             {student && (
